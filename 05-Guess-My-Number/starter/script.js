@@ -1,49 +1,51 @@
 'use strict';
 
 // Declare secretNumber Variable
-const secretNumber = Math.trunc(Math.random() * 20) + 1;
-// Create Score Variable
+
+let secretNum = Math.trunc(Math.random() * 20) + 1;
+document.querySelector('.number').textContent = secretNum;
+
 let score = 20;
 
-document.querySelector('.number').textContent = secretNumber;
-console.log(secretNumber);
+let highScore = 0;
+
+const messageValue = function (message) {
+  document.querySelector('.message').textContent = message;
+};
 
 document.querySelector('.check').addEventListener('click', function () {
   let guess = Number(document.querySelector('.guess').value);
   console.log(guess);
 
-  //When there's no input!
+  //   Guess is Empty
   if (!guess) {
-    document.querySelector('.message').textContent = 'Put in a number';
-
-    // when the Player wins!
-  } else if (guess === secretNumber) {
-    document.querySelector('.message').textContent = 'Correct Number!!';
-
-    document.querySelector('body').style.backgroundColor = '#60b347';
-
+    messageValue('Put in a Number!');
+    // Guess is Correct
+  } else if (guess === secretNum) {
+    messageValue('Guess is Correct!');
+    document.querySelector('body').style.backgroundColor = 'Green';
     document.querySelector('.number').style.width = '30rem';
-
-    //when guess is too high
-  } else if (guess > secretNumber) {
-    if (score > 1) {
-      document.querySelector('.message').textContent = 'Too HIGH!';
-      score--;
-      document.querySelector('.score').textContent = score;
-    } else {
-      document.querySelector('.message').textContent = 'You lost the game!';
-      document.querySelector('.score').textContent = score = 0;
+    if (guess > highScore) {
+      highScore = document.querySelector('.highscore').textContent = score;
     }
-    // When guess is too low!
-  } else if (guess < secretNumber) {
-    if (score > 1) {
-      document.querySelector('.message').textContent = 'Too LOW!';
-      score--;
-      document.querySelector('.score').textContent = score;
-    } else {
-      document.querySelector('.message').textContent = 'You lost the game!';
 
-      document.querySelector('.score').textContent = score = 0;
-    }
+    // Guess is Wrong/ user ran out of Score: Two Parts.
+  } else if (guess !== secretNum) {
+    messageValue(guess > secretNum ? 'Too High' : 'Too Low');
+    score--;
+
+    document.querySelector('.score').textContent = score;
   }
 });
+
+// Again Button/ reset game without Reloading page
+document.querySelector('.again').addEventListener('click', function () {
+  messageValue('Start guessing!!');
+  document.querySelector('.guess').value = '';
+  score = 20;
+  document.querySelector('body').style.backgroundColor = 'black';
+  document.querySelector('.number').style.width = '15rem';
+  document.querySelector('.number').textContent = '?';
+});
+
+console.log(secretNum);
