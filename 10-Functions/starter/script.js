@@ -220,6 +220,94 @@
 // console.log(addVAT2(100));
 // console.log(addVAT2(23));
 
+// const runOnce = function () {
+//   console.log(`This will never run again`);
+// };
+// runOnce();
+
+// // IFFY Imediately invoked function expression
+// // These two functions WIll never run more then once.Gets destroyed after one use.
+// (function () {
+//   console.log(`This will never run again`);
+//   const isPrivate = 234;
+// })();
+
+// (() => console.log(`This too Will never run again`))();
+
+// const secureBooking = function () {
+//   let passengerCount = 0;
+//   return function () {
+//     passengerCount++;
+//     console.log(`${passengerCount} passengers`);
+//   };
+// };
+
+// const booker = secureBooking();
+
+// booker();
+// booker();
+// booker();
+
+// const game = {
+//   team1: 'Bayern Munich',
+//   team2: 'Borrussia Dortmund',
+//   players: [
+//     [
+//       'Neuer',
+//       'Pavard',
+//       'Martinez',
+//       'Alaba',
+//       'Davies',
+//       'Kimmich',
+//       'Goretzka',
+//       'Coman',
+//       'Muller',
+//       'Gnarby',
+//       'Lewandowski',
+//     ],
+//     [
+//       'Burki',
+//       'Schulz',
+//       'Hummels',
+//       'Akanji',
+//       'Hakimi',
+//       'Weigl',
+//       'Witsel',
+//       'Hazard',
+//       'Brandt',
+//       'Sancho',
+//       'Gotze',
+//     ],
+//   ],
+//   score: '4:0',
+//   scored: ['Lewandowski', 'Gnarby', 'Lewandowski', 'Hummels'],
+//   date: 'Nov 9th, 2037',
+//   odds: {
+//     team1: 1.33,
+//     x: 3.25,
+//     team2: 6.5,
+//   },
+// };
+// // for (const [i, player] of game.scored.entries()) {
+// //   console.log(`Goal${i + 1}: ${player}`);
+// // }`
+// const odds = Object.values(game.odds);
+// let average = 0;
+// for (const odd of odds) average += odd;
+// average /= odds.length;
+// console.log(average);
+
+// // // 3.
+// // for (const [team, odd] of Object.entries(game.odds)) {
+// //     const teamStr = team === 'x' ? 'draw' : `victory ${game[team]}`;
+// //     console.log(`Odd of ${teamStr} ${odd}`);
+// //   }
+
+// for (const [team, odd] of Object.entries(game.odds)) {
+//   const teamStr = team === 'x' ? 'draw' : `victory ${game[team]}`;
+//   console.log(`Odds of ${teamStr} ${odd}`);
+// }
+
 // const poll = {
 //   question: 'What is your favourite programming language?',
 //   options: ['0: JavaScript', '1: Python', '2: Rust', '3: C++'],
@@ -257,92 +345,80 @@
 // poll.displayResults.call({ answers: [5, 2, 3] });
 // poll.displayResults.call({ answers: [1, 5, 3, 0, 9, 6, 1] });
 
-// const runOnce = function () {
-//   console.log(`This will never run again`);
+// const poll = {
+//   question: 'What is your favourite programming language?',
+//   options: ['0: JavaScript', '1: Python', '2: Rust', '3: C++'],
+//   // This generates [0, 0, 0, 0]. More in the next section! answers: new Array(4).fill(0),
+//   answers: new Array(4).fill(0),
+//   registerNewAnswer() {
+//     const answer = Number(
+//       prompt(
+//         `${this.question}\n${this.options.join(`\n`)}\n(This option Number)`
+//       )
+//     );
+//     console.log(answer);
+//     typeof answer === `number` &&
+//       answer < this.answers.length &&
+//       this.answers[answer]++;
+//   },
 // };
-// runOnce();
+// document
+//   .querySelector(`.poll`)
+//   .addEventListener(`click`, poll.registerNewAnswer.bind(poll));
+// // poll.registerNewAnswer();
 
-// // IFFY Imediately invoked function expression
-// // These two functions WIll never run more then once.Gets destroyed after one use.
-// (function () {
-//   console.log(`This will never run again`);
-//   const isPrivate = 234;
-// })();
-
-// (() => console.log(`This too Will never run again`))();
-
-// const secureBooking = function () {
-//   let passengerCount = 0;
-//   return function () {
-//     passengerCount++;
-//     console.log(`${passengerCount} passengers`);
+// let f;
+// let g = function () {
+//   const a = 23;
+//   f = function () {
+//     console.log(a * 2);
 //   };
 // };
 
-// const booker = secureBooking();
+// const h = function () {
+//   const b = 777;
+//   f = function () {
+//     console.log(b * 2);
+//   };
+// };
 
-// booker();
-// booker();
-// booker();
+// g();
+// f();
+// console.dir(f);
 
-const game = {
-  team1: 'Bayern Munich',
-  team2: 'Borrussia Dortmund',
-  players: [
-    [
-      'Neuer',
-      'Pavard',
-      'Martinez',
-      'Alaba',
-      'Davies',
-      'Kimmich',
-      'Goretzka',
-      'Coman',
-      'Muller',
-      'Gnarby',
-      'Lewandowski',
-    ],
-    [
-      'Burki',
-      'Schulz',
-      'Hummels',
-      'Akanji',
-      'Hakimi',
-      'Weigl',
-      'Witsel',
-      'Hazard',
-      'Brandt',
-      'Sancho',
-      'Gotze',
-    ],
-  ],
-  score: '4:0',
-  scored: ['Lewandowski', 'Gnarby', 'Lewandowski', 'Hummels'],
-  date: 'Nov 9th, 2037',
-  odds: {
-    team1: 1.33,
-    x: 3.25,
-    team2: 6.5,
-  },
-};
+// // Re-Assigned f function
+// h();
+// f();
 
-// for (const [i, player] of game.scored.entries()) {
-//   console.log(`Goal${i + 1}: ${player}`);
-// }
+// console.dir(f);
 
-const odds = Object.values(game.odds);
-let average = 0;
-for (const odd of odds) average += odd;
-average /= odds.length;
-console.log(average);
+//Example 2
 
-// // 3.
-// for (const [team, odd] of Object.entries(game.odds)) {
-//     const teamStr = team === 'x' ? 'draw' : `victory ${game[team]}`;
-//     console.log(`Odd of ${teamStr} ${odd}`);
-//   }
+// const boardPassengers = function (n, wait) {
+//   const perGroup = n / 3;
 
-for (const [team, odd] of Object.entries(game.odds)) {
-  const teamStr = team === 'x' ? 'draw' : `victory ${game[team]}`;
-  console.log(`Odds of ${teamStr} ${odd}`);
-}
+//   setTimeout(function () {
+//     console.log(`we are now boarding all ${n} passengers`);
+//     console.log(`There are 3 groups, each with ${perGroup} passengers`);
+//   }, wait * 1000);
+
+//   console.log(`will start boarding in ${wait} seconds`);
+// };
+
+// const perGroup = 1000;
+// boardPassengers(180, 3);
+
+// (function () {
+//   const header = document.querySelector(`h1`);
+//   header.style.color = 'red';
+
+//   document.querySelector('body').addEventListener('click', function () {
+//     header.style.color = 'blue';
+
+//     document.querySelector('body').addEventListener('click', function () {
+//       header.style.color = 'purple';
+//     });
+
+//     console.log(header);
+//   });
+// })();
